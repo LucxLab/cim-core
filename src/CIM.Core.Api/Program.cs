@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 using CIM.Core.Api.Exceptions;
@@ -57,4 +58,5 @@ app.MapControllers();
 
 app.Run();
 
+[ExcludeFromCodeCoverage]
 public partial class Program { }

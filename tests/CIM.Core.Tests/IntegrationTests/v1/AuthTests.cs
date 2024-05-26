@@ -15,7 +15,8 @@ public class AuthTests : IClassFixture<TestWebApplicationFixture>
     private readonly TestWebApplicationFixture _app;
 
     private const string BaseUrl = "/api/v1/auth";
-    private const string TestEmail = "firstname.lastname@test.com";
+    private const string Email = "firstname.lastname@test.com";
+    private const string Password = "secretpassword";
 
     public AuthTests(TestWebApplicationFixture application)
     {
@@ -26,19 +27,15 @@ public class AuthTests : IClassFixture<TestWebApplicationFixture>
     public async Task RegisterUserAction_When_ValidRequest_Should_ReturnCreatedUser()
     {
         // Arrange
-        var serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        var newUser = new RegisterRequest { Email = TestEmail };
-
-        var requestContent = new StringContent(JsonSerializer.Serialize(newUser, serializerOptions), null, MediaTypeNames.Application.Json);
+        var newUser = new RegisterRequest { Email = Email, Password = Password };
 
         // Act
-        var result = await _app.Client.PostAsync(BaseUrl, requestContent);
+        var result = await _app.Client.PostAsync(BaseUrl, _app.GenerateRequestContent(newUser));
 
         // Assert
         Assert.Equal(HttpStatusCode.Created, result.StatusCode);
 
-        var responseContent = await result.Content.ReadAsStringAsync();
-        var createdUser = JsonSerializer.Deserialize<RegisterResponse>(responseContent, serializerOptions);
+        var createdUser = await _app.RetrieveResponseContent<RegisterResponse>(result);
 
         Assert.NotNull(createdUser);
         Assert.NotNull(createdUser.Id);
@@ -49,13 +46,10 @@ public class AuthTests : IClassFixture<TestWebApplicationFixture>
     public async Task RegisterUserAction_When_InvalidRequest_Should_ReturnBadRequest()
     {
         // Arrange
-        var serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         var newUser = new RegisterRequest { Email = "invalid-email" };
 
-        var requestContent = new StringContent(JsonSerializer.Serialize(newUser, serializerOptions), null, MediaTypeNames.Application.Json);
-
         // Act
-        var result = await _app.Client.PostAsync(BaseUrl, requestContent);
+        var result = await _app.Client.PostAsync(BaseUrl, _app.GenerateRequestContent(newUser));
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
@@ -65,14 +59,10 @@ public class AuthTests : IClassFixture<TestWebApplicationFixture>
     public async Task RegisterUserAction_When_DuplicateEmail_Should_ReturnConflict()
     {
         // Arrange
-        var serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        var newUser = new RegisterRequest { Email = TestEmail };
-
-        var requestContent = new StringContent(JsonSerializer.Serialize(newUser, serializerOptions), null,
-            MediaTypeNames.Application.Json);
+        var newUser = new RegisterRequest { Email = Email, Password = Password };
 
         // Act
-        var result = await _app.Client.PostAsync(BaseUrl, requestContent);
+        var result = await _app.Client.PostAsync(BaseUrl, _app.GenerateRequestContent(newUser));
 
         // Assert
         Assert.Equal(HttpStatusCode.Conflict, result.StatusCode);

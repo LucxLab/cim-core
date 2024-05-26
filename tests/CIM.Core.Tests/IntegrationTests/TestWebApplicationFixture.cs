@@ -1,3 +1,6 @@
+using System.Net.Mime;
+using System.Text.Json;
+
 using CIM.Core.Infrastructure.MongoDB;
 
 namespace CIM.Core.Tests.IntegrationTests;
@@ -11,6 +14,20 @@ public class TestWebApplicationFixture : IDisposable
     {
         _factory = new TestWebApplicationFactory();
         Client = _factory.CreateClient();
+    }
+    
+    public StringContent GenerateRequestContent<T>(T request, JsonSerializerOptions? options = null)
+    {
+        var serializerOptions = options ?? new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        return new StringContent(JsonSerializer.Serialize(request, serializerOptions), null, MediaTypeNames.Application.Json);
+    }
+    
+    public async Task<T?> RetrieveResponseContent<T>(HttpResponseMessage response, JsonSerializerOptions? options = null)
+    {
+        var serializerOptions = options ?? new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        return JsonSerializer.Deserialize<T>(responseContent, serializerOptions);
     }
 
     public void Dispose()

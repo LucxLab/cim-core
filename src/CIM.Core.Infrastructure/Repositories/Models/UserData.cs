@@ -14,4 +14,10 @@ public class UserData
 
     [BsonElement("email")]
     public string Email { get; set; } = default!;
+    
+    [BsonElement("password")]
+    public byte[] Password { get; set; } = default!;
+    
+    [BsonElement("salt")]
+    public byte[] Salt { get; set; } = default!;
 }

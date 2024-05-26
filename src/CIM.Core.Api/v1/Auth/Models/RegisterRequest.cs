@@ -10,7 +10,7 @@ namespace CIM.Core.Api.v1.Auth.Models;
 /// </summary>
 [SwaggerSchema(
     Title = "RegisterRequest",
-    Required = ["email"]
+    Required = ["email", "password"]
 )]
 public class RegisterRequest
 {
@@ -21,5 +21,13 @@ public class RegisterRequest
         Title = "The new email address to register.",
         Format = "email"
     )]
-    public string Email { get; init; } = default!;
+    public string? Email { get; init; }
+    
+    [Required]
+    [JsonPropertyName("password")]
+    [SwaggerSchema(
+        Title = "The new password to register.",
+        Format = "password"
+    )]
+    public string? Password { get; init; }
 }

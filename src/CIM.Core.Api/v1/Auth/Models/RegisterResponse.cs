@@ -18,7 +18,7 @@ public class RegisterResponse
     [SwaggerSchema(
         Title = "The registered unique identifier."
     )]
-    public string Id { get; init; } = default!;
+    public string? Id { get; init; }
 
     [Required]
     [JsonPropertyName("email")]
@@ -26,5 +26,5 @@ public class RegisterResponse
         Title = "The registered email address.",
         Format = "email"
     )]
-    public string Email { get; init; } = default!;
+    public string? Email { get; init; }
 }

@@ -1,9 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
+
 using CIM.Core.Api.v1.Auth.Models;
 
 using Swashbuckle.AspNetCore.Filters;
 
 namespace CIM.Core.Api.v1.Auth.Examples;
 
+[ExcludeFromCodeCoverage]
 internal class RegisterResponseExample : IExamplesProvider<RegisterResponse>
 {
     public RegisterResponse GetExamples()

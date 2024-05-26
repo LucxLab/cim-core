@@ -1,3 +1,5 @@
+using System.Text;
+
 using CIM.Core.Api.v1.Auth.Models;
 using CIM.Core.Application.Models;
 
@@ -7,7 +9,10 @@ internal static class RegisterAdapter
 {
     public static User ToUser(this RegisterRequest request)
     {
-        return new User(request.Email);
+        return new User(
+            request.Email!,
+            Encoding.UTF8.GetBytes(request.Password!)
+        );
     }
 
     public static RegisterResponse ToApiResponse(this User user)
