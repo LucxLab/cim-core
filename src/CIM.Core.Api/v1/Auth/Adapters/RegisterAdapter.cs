@@ -1,0 +1,17 @@
+using CIM.Core.Api.v1.Auth.Models;
+using CIM.Core.Application.Models;
+
+namespace CIM.Core.Api.v1.Auth.Adapters;
+
+internal static class RegisterAdapter
+{
+    public static User ToUser(this RegisterRequest request)
+    {
+        return new User(request.Email);
+    }
+
+    public static RegisterResponse ToApiResponse(this User user)
+    {
+        return new RegisterResponse { Id = user.Id, Email = user.Email };
+    }
+}
