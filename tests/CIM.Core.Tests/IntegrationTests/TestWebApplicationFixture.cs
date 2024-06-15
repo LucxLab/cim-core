@@ -1,7 +1,7 @@
 using System.Net.Mime;
 using System.Text.Json;
 
-using CIM.Core.Infrastructure.MongoDB;
+using CIM.Core.Infrastructure.Persistence.MongoDB.Interfaces;
 
 namespace CIM.Core.Tests.IntegrationTests;
 
@@ -32,10 +32,10 @@ public class TestWebApplicationFixture : IDisposable
 
     public void Dispose()
     {
-        var database = _factory.Services.GetService(typeof(IMongoDbFactory));
-        if (database is IMongoDbFactory mongoDbFactory)
+        var databaseFactoryService = _factory.Services.GetService(typeof(IMongoDbFactory));
+        if (databaseFactoryService is IMongoDbFactory databaseFactory)
         {
-            mongoDbFactory.DropDatabase();
+            databaseFactory.DropDatabase();
         }
 
         _factory.Dispose();

@@ -5,13 +5,25 @@ namespace CIM.Core.Application.Models.Base;
 /// </summary>
 public class IdentifiableBase
 {
-    protected IdentifiableBase(string? id)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="IdentifiableBase"/> class, with a default identifier.
+    /// </summary>
+    protected IdentifiableBase()
     {
-        Id = id ?? default!;
+        Id = default!;
     }
 
     /// <summary>
-    /// Unique identifier for the user.
+    /// Initializes a new instance of the <see cref="IdentifiableBase"/> class, with the specified identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier for the entity.</param>
+    protected IdentifiableBase(string id)
+    {
+        Id = id;
+    }
+
+    /// <summary>
+    /// Unique identifier for an entity.
     /// </summary>
     public string Id { get; }
 }

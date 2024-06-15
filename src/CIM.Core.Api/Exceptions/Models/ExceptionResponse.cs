@@ -10,7 +10,7 @@ namespace CIM.Core.Api.Exceptions.Models;
 
 public class ExceptionResponse : ActionResult
 {
-    private const string BaseCode = "CCO";
+    private const string BaseCode = "CIM_CO";
 
     public ExceptionResponse(
         string code,

@@ -1,11 +1,15 @@
 using CIM.Core.Application.Exceptions;
 using CIM.Core.Application.Models;
-using CIM.Core.Application.Repositories;
+using CIM.Core.Application.Repositories.Interfaces;
 using CIM.Core.Application.Services.Interfaces;
+using CIM.Core.Application.UseCases.Auth.Interfaces;
 
-namespace CIM.Core.Application.UseCases.Auth.Register;
+namespace CIM.Core.Application.UseCases.Auth;
 
-public class RegisterUseCase : IRegisterUseCase
+/// <summary>
+/// Use case for registering a new user.
+/// </summary>
+public sealed class RegisterUseCase : IRegisterUseCase
 {
     private readonly IUserRepository _userRepository;
     private readonly IHashingService _hashingService;
@@ -16,6 +20,7 @@ public class RegisterUseCase : IRegisterUseCase
         _hashingService = hashingService;
     }
 
+    /// <inheritdoc/>
     public async Task<User> ExecuteAsync(User newUser)
     {
         User? existingUser = await _userRepository.FindByEmail(newUser.Email);

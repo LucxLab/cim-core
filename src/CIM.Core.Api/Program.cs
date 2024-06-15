@@ -5,6 +5,7 @@ using CIM.Core.Api.Exceptions;
 using CIM.Core.Application;
 using CIM.Core.Infrastructure;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
 
 using Swashbuckle.AspNetCore.Filters;
@@ -16,7 +17,6 @@ using Swashbuckle.AspNetCore.Filters;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 IServiceCollection services = builder.Services;
 ConfigurationManager configuration = builder.Configuration;
-
 
 services.AddControllers().ConfigureApiBehaviorOptions(opt =>
 {
@@ -38,6 +38,13 @@ services.AddSwaggerGen(opt =>
 services.RegistrationApplication();
 services.RegistrationInfrastructure(configuration);
 
+services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(opt =>
+    {
+        opt.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        opt.SlidingExpiration = true;
+    });
+
 
 /*
 // Create the application
@@ -53,6 +60,11 @@ if (app.Environment.IsEnvironment("Local"))
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.Strict
+});
 
 app.MapControllers();
 

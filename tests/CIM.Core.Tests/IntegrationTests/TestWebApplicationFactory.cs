@@ -1,6 +1,5 @@
 using CIM.Core.Application;
 using CIM.Core.Infrastructure;
-using CIM.Core.Infrastructure.MongoDB;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;

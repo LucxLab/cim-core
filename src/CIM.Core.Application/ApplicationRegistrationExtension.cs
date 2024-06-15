@@ -1,6 +1,7 @@
 using CIM.Core.Application.Services;
 using CIM.Core.Application.Services.Interfaces;
-using CIM.Core.Application.UseCases.Auth.Register;
+using CIM.Core.Application.UseCases.Auth;
+using CIM.Core.Application.UseCases.Auth.Interfaces;
 
 using Microsoft.Extensions.DependencyInjection;
 

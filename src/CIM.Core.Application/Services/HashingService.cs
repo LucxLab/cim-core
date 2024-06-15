@@ -4,8 +4,12 @@ using CIM.Core.Application.Services.Interfaces;
 
 namespace CIM.Core.Application.Services;
 
-public class HashingService : IHashingService
+/// <summary>
+/// Service that provides hashing functionality.
+/// </summary>
+public sealed class HashingService : IHashingService
 {
+    /// <inheritdoc/>
     public byte[] GenerateSalt(int length = 16)
     {
         byte[] salt = new byte[length];
@@ -13,8 +17,9 @@ public class HashingService : IHashingService
 
         rng.GetBytes(salt);
         return salt;
-    } 
-    
+    }
+
+    /// <inheritdoc/>
     public byte[] HashWithSalt(byte[] password, byte[] salt)
     {
         byte[] combined = new byte[password.Length + salt.Length];

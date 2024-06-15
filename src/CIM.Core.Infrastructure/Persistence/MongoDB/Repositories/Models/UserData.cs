@@ -4,10 +4,12 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace CIM.Core.Infrastructure.Repositories.Models;
 
 /// <summary>
-///     Represents a user in the infrastructure, mapped from/to the data persistence layer.
+/// Represents a user, mapped from/to the data persistence layer.
 /// </summary>
-public class UserData
+internal class UserData
 {
+    internal const string CollectionName = "users";
+
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; } = default!;

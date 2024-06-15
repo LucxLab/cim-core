@@ -9,7 +9,7 @@ using CIM.Core.Api.v1.Auth.Examples;
 using CIM.Core.Api.v1.Auth.Models;
 using CIM.Core.Application.Exceptions;
 using CIM.Core.Application.Models;
-using CIM.Core.Application.UseCases.Auth.Register;
+using CIM.Core.Application.UseCases.Auth.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 

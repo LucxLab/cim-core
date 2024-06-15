@@ -3,27 +3,29 @@ using CIM.Core.Application.Models.Base;
 namespace CIM.Core.Application.Models;
 
 /// <summary>
-///     Represents a user in the system.
+/// Represents a user in the system.
 /// </summary>
 public class User : IdentifiableBase
 {
     /// <summary>
-    /// Initializes a new instance of the User when it doesn't exist in the system yet.
+    /// Initializes a new instance of the <see cref="User"/> when it doesn't exist in the system yet.
     /// </summary>
     /// <param name="email">The unique email address for the user.</param>
     /// <param name="password">The password for the user.</param>
-    public User(string email, byte[] password) : base(id: null)
+    public User(string email, byte[] password)
     {
         Email = email;
         Password = password;
+        Salt = [];
     }
 
     /// <summary>
-    /// Initializes a new instance of the User when it already exists in the system.
+    /// Initializes a new instance of the <see cref="User"/> when it already exists in the system.
     /// </summary>
     /// <param name="id">The unique identifier for the user.</param>
     /// <param name="email">The unique email address for the user.</param>
     /// <param name="password">The password for the user.</param>
+    /// <param name="salt">The salt for the user's password.</param>
     public User(string id, string email, byte[] password, byte[] salt) : base(id)
     {
         Email = email;
